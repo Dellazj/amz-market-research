@@ -1,0 +1,43 @@
+# ---- 凭据 / 密钥 ----
+*.key
+*.pem
+*.env
+.env.*
+cf_env.sh
+*_env.sh
+mcp_client.py
+
+# ---- 本地系统 / 运行态 ----
+state.db*
+*.db
+*.db-wal
+*.db-shm
+sessions/
+logs/
+memories/
+.npm/
+node_modules/
+.wrangler/
+.lsp/
+.local/
+.git-credentials
+
+# ---- 内部报告 / 数据 ----
+# 含 API-key 的客户端、内部数据库、品类报告、参考数据
+voc_report_*.html
+market_research_*.html
+market_research_*.py
+/data/
+/tmp/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+pdf-venv/
+
+# ---- 编辑器 ----
+.DS_Store
+.vscode/
+.idea/
