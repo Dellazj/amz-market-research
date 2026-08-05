@@ -32,22 +32,36 @@
 
 ```
 amz-market-research/
-├── SKILL.md                          # 技能主文档（方法论 + 数据采集工作流 + 样式 + 部署）
+├── SKILL.md                          # 技能主文档（方法论 + 数据采集工作流 + 样式 + 部署 + 脱敏）
+├── README.md
+├── .gitignore                        # 已排除凭据/内部路径
+├── examples/
+│   └── curling-iron-report.html      # 卷发棒（Curling Iron × 美国）成品样张
 └── references/
-    └── pure-css-trend-curves.md      # 纯 CSS「近12个月销量/销售额曲线」组件实现
+    ├── pure-css-trend-curves.md        # 纯 CSS「近12个月销量/销售额曲线」组件实现
+    ├── report-completeness-standard.md # 报告完整度对标基准（⭐ 首版易漏项）
+    ├── report-generation-architecture.md # 多片段生成架构 + 锚点/目录/标签审计 + 结构对齐清单
+    └── github-publish-contents-api.md  # 用 GitHub REST Contents API 直推发布的方法
 ```
 
 ## 输出样式
 
 - 单文件 HTML，**蓝灰商务风**（--blue #2563eb + 灰阶）
-- **纯 CSS** 组件（kpi-grid / bar-item / insight-box / table-wrap / tag 等），无 ECharts
+- **纯 CSS** 组件（kpi-grid / bar-item / insight-box / verdict-box / table-wrap / tag 等），无 ECharts
 - 可直接部署 Cloudflare Pages / GitHub Pages / Vercel 等静态托管
+
+## 常见坑（详见 SKILL.md）
+
+- ⛔ **CSS 拼到 `</style>` 之后 → 页面显示"源码标签"**：多片段字符串拼接 HTML 时，若完整 CSS 被拼进了字符串里第一个 `</style>` 之后，CSS 会掉进 `<body>` 当纯文本丢弃，页面只剩目录样式、其余全无排版、看起来像"源代码"。**生成后必校验** `<style>` 内总长（完整报告应数千字节）。
+- ⛔ 生成器脚本**别用一个大 f-string 拼 HTML**（CSS 字面大括号会炸），改用字符串拼接 + `%` 格式化。
+- ⛔ 英文评论原声的撇号（`I've` 等）用 `\u2019` 转义，避免炸掉单引号字符串。
 
 ## 重要约定
 
 - ⛔ **凭据卫生**：产出物绝不硬编码 API key/token/邮箱；Cloudflare 等凭据一律走环境变量
 - ⛔ **诚实数据**：好评/差评 TOP20 为真实频次，样本不足时降级 TOP10 并明确说明，绝不硬凑
 - 页脚「分析负责人」可自定义或留空
+- 公开分享前按 SKILL.md「发布前脱敏清单」检查内部路径与 session 专属报告
 
 ## License
 
