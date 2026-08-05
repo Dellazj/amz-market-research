@@ -12,6 +12,14 @@
 - 「空气炸锅 × 德国」
 - 「电动牙刷 × 英国」
 
+也可用包内参数化脚本 `templates/generator_template.py` 直接生成：
+
+```bash
+python3 templates/generator_template.py --product "Straightener brush" --product_cn "直发梳" \
+    --country US --site US --node <YOUR_NODE_ID> --currency '$' \
+    --report out/report.html
+```
+
 报告框架固定为五大部分：
 
 | 部分 | 内容 |
@@ -35,8 +43,8 @@ amz-market-research/
 ├── SKILL.md                          # 技能主文档（方法论 + 数据采集工作流 + 样式 + 部署 + 脱敏）
 ├── README.md
 ├── .gitignore                        # 已排除凭据/内部路径
-├── examples/
-│   └── curling-iron-report.html      # 卷发棒（Curling Iron × 美国）成品样张
+├── templates/
+│   └── generator_template.py         # 参数化通用生成器脚本（产品/国家/类目/Node 全变量）
 └── references/
     ├── pure-css-trend-curves.md        # 纯 CSS「近12个月销量/销售额曲线」组件实现
     ├── report-completeness-standard.md # 报告完整度对标基准（⭐ 首版易漏项）
@@ -61,7 +69,7 @@ amz-market-research/
 - ⛔ **凭据卫生**：产出物绝不硬编码 API key/token/邮箱；Cloudflare 等凭据一律走环境变量
 - ⛔ **诚实数据**：好评/差评 TOP20 为真实频次，样本不足时降级 TOP10 并明确说明，绝不硬凑
 - 页脚「分析负责人」可自定义或留空
-- 公开分享前按 SKILL.md「发布前脱敏清单」检查内部路径与 session 专属报告
+- 公开分享前按 SKILL.md「发布前脱敏清单」检查内部路径与 session 专属报告，不要把含私有署名/私有数据的具体报告提交到公开仓库
 
 ## License
 
