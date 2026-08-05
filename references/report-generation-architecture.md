@@ -7,7 +7,7 @@
 单个 `part{K}.py` 产出该板块的 HTML 字符串到同名 py 模块：
 
 ```python
-# part2.py  — 只负责"第二部分"
+# <WORKDIR>/part2.py — 只负责「第二部分」
 def src(t): ...   # 来源角标
 def sub(t): ...   # 小节标题
 def note(t): ...
@@ -16,7 +16,7 @@ s2_body = []
 s2_body.append('<div class="sub-title">...</div>')
 # ... 组装该板块所有小节 ...
 S2 = sec('二','产品介绍', S2_SRC, ''.join(s2_body))
-with open('part2_seg.py','w') as f:
+with open('<WORKDIR>/part2.py','w') as f:
     f.write("S2 = " + repr(S2))
 print("P2 完成, len:", len(S2))
 ```
@@ -24,7 +24,7 @@ print("P2 完成, len:", len(S2))
 主脚本 `importlib` 加载各片段得到 `S1..S5` 字符串，再拼 hero + 目录 + footer：
 
 ```python
-spec = importlib.util.spec_from_file_location('p2','part2_seg.py')
+spec = importlib.util.spec_from_file_location('p2','<WORKDIR>/part2.py')
 m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
 S2 = m.S2
 html = html_head + S_SF + S1 + S2 + S3 + S4 + S5 + html_foot
@@ -32,7 +32,7 @@ html = html_head + S_SF + S1 + S2 + S3 + S4 + S5 + html_foot
 
 - 每个 part 文件**自包含**必要的辅助函数（src/sec/sub/note），不要依赖跨文件 import——片段脚本被主脚本 `exec_module` 加载时不一定有其它模块的命名空间。
 - CSS 定义放在**第一个 part（P1）顶层变量**（如 `CSS`），主脚本从 `m1.CSS` 取，避免重复维护。
-- 片段脚本独立可跑（`python3 part2.py`），方便单板块调试；改完某板块只重跑该 part + 主拼接。
+- 片段脚本独立可跑（`python3 gen_curling_p2.py`），方便单板块调试；改完某板块只重跑该 part + 主拼接。
 
 ## ⚠️ 锚点/目录 id 注入：别用朴素 replace 覆盖
 
@@ -66,7 +66,7 @@ html{scroll-behavior:smooth;}
 
 目录放 hero 之后、正文之前：`<div class="toc"><h3>📑 目录导航</h3><ol>...<li><a href="#s1"><span class="no">一</span><span class="t">市场概况</span></a></li>...</ol></div>`。
 
-**用户偏好**：用户明确要求报告**带目录导航**；页脚/hero 署名用 **Della**（若用户指定，否则留空）。生成后校验 6 个 `id="s0..s5"` 与 6 个 `href="#s0..s5"` 一一对应、`郑佳` 计数为 0（若此前默认署名是郑佳，改完务必 grep 清零）。
+**用户偏好**：用户明确要求报告**带目录导航**；页脚/hero 署名用 **<署名>**（使用者在运行时指定；默认留空）。生成后校验 6 个 `id="s0..s5"` 与 6 个 `href="#s0..s5"` 一一对应。
 
 ## ⛔ 标签配对 audit（生成后必跑，防静默破坏）
 
@@ -74,7 +74,7 @@ html{scroll-behavior:smooth;}
 
 ```python
 import re
-html=open('output/index.html',encoding='utf-8').read()
+html=open('<YOUR_REPORT>.html',encoding='utf-8').read()   # 换成你的报告文件
 for tag in ['section','div','table','tr','td','th','ul','ol','li','b','span']:
     o=len(re.findall(r'<%s[\s>]'%tag,html)); c=len(re.findall(r'</%s>'%tag,html))
     print(f'<{tag}>: {o}/{c}', '✓' if o==c else '✗ MISMATCH')
@@ -102,7 +102,7 @@ pat = re.compile(r"S%s = sec\('%s','[^']*', S%s_SRC, ''.join\(s%s_body\)\)" % (n
 
 ## 📐 "参考 X 报告优化 Y 报告"结构对齐清单
 
-用户说「参考 B 报告优化 A 报告」时，不是调文字，而是要**把 A 的呈现结构对齐到 B**。逐项核对下面这组直发梳式参考的结构要件（缺则补齐）：
+用户说「参考 B 报告优化 A 报告」时，不是调文字，而是要**把 A 的呈现结构对齐到 B**。逐项核对下面这组参考报告的结构要件（缺则补齐）：
 
 - **板块标题带 emoji**（📊 市场概况 / 🧾 产品介绍 / 👥 受众分析 / 🎯 需求洞察 / 🚀 开发策略）+ 每板块开头 `div.section-sub` 标注「线上(Amazon US Sorftime实时) 与 线下(公开信息) 分开呈现」。
 - **KPI 四卡**：Top100 月销量 / 月销额(≈人民币) / 平均客单价(+中位价) / 线上预估年销额。
