@@ -19,15 +19,15 @@ def req(method, path, data=None):
     except urllib.error.HTTPError as e: return e.code, e.read().decode()[:300]
 
 s,_ = req("GET","/user");                     # 账号核对
-s,_ = req("GET","/repos/Dellazj/amz-x");      # 200=有访问权, 403/404=受限PAT无权限
+s,_ = req("GET","/repos/OWNER/REPO");         # 200=有访问权, 403/404=受限PAT无权限（OWNER/REPO换成你的）
 # 写权限探测：上传再删除临时文件
 import base64 as b64
-s,b = req("PUT","/repos/Dellazj/amz-x/contents/_perm_test.txt",
+s,b = req("PUT","/repos/OWNER/REPO/contents/_perm_test.txt",
           {"message":"perm test","content":b64.b64encode(b"x").decode()})
 print("write PUT:", s)                        # 201 = 有写权限
 if s==201:
     sha = json.loads(b).get("content",{}).get("sha")
-    req("DELETE","/repos/Dellazj/amz-x/contents/_perm_test.txt",{"message":"cleanup","sha":sha})
+    req("DELETE","/repos/OWNER/REPO/contents/_perm_test.txt",{"message":"cleanup","sha":sha})
 ```
 
 关键判定：
@@ -55,7 +55,31 @@ def put_file(owner, repo, repo_path, local_path, message):
 s, tree = req("GET","/repos/{owner}/{repo}/git/trees/main?recursive=1")
 # 打印每个 node 的 type 和 path，确认文件齐全、无漏传
 ```
-再 `GET /repos/{owner}/{repo}` 拿 `html_url` 返回用户。
+再 `GET /repos/{owner}/{repo}` 拿 `html_url` 返回用户。**并逐个用 raw URL 复验**（比 trees 更可靠，能确认编码与内容完整）：
+```python
+import urllib.request
+for f in ["SKILL.md","references/xx.md","examples/report.html"]:
+    r = urllib.request.urlopen(f"https://raw.githubusercontent.com/{owner}/{repo}/main/{f}", timeout=20)
+    data = r.read()
+    print(f"{f}: HTTP {r.status} {len(data)}B")   # 大小应与本地一致
+```
+若发布物里有报告样张 HTML，用它 validate CSS 完整（`<style>` 块总长数千字节，见主 SKILL 的 CSS 源码标签坑）——防止把「CSS 掉到 body 当文本」的坏版本公开出去。
+
+## 2b. 更新已有（非空）仓库：PUT 需带原文件 SHA
+
+目标仓库**不是空仓库**（已有 README/SKILL 等）时，更新现有文件与新建不同：
+1. **先 `GET /contents/{path}` 拿现有文件 `sha`**（逐个存在文件都要）。
+2. PUT 时在 body 里带 `"sha":<旧SHA>` + 新内容 —— 不带会 409 冲突。
+3. **只覆盖你要改的文件，未动文件（`.gitignore`、已保留的 reference 等）不要碰**——它们不在你的发布集里，推送目录只组装新增/变更文件即可。
+4. 新建文件（references/examples 里原来没有的）直接 PUT 不含 sha。
+```python
+# 更新现有文件
+GET  /contents/SKILL.md  -> d['sha']
+PUT  /contents/SKILL.md  {"message":..., "content":b64, "sha":old_sha, "branch":"main"}
+# 新建文件
+PUT  /contents/references/new.md  {"message":..., "content":b64, "branch":"main"}
+```
+按「该文件在仓库里是否已存在」决定带不带 sha，逐文件即可混合新增与更新。
 
 ## 3. 发布物离线组装（推荐做法）
 
