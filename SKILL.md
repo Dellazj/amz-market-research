@@ -15,7 +15,7 @@ description: |
   - 所有数据点标注来源工具 + 估算标记，绝不编造假数据
 
   输出形式：单文件蓝灰商务风 HTML（纯 CSS 组件，见参考），产品名/关键词保留英文 + 中文翻译，汇报全程中文。
-  定位：与 zach-product-research（四件套）/ amazon-category-report（17章类目报告）互补，本 Skill 聚焦「角色设定的产品×国家市场调研」。
+  定位：聚焦「角色设定的产品×国家市场调研」；如需类目粒度的细分类目报告，可配合其他通用类目调研 skill 使用（不在本包内）。
 user-invocable: true
 risk-level: low
 ---
@@ -90,23 +90,25 @@ risk-level: low
 
 ## ⛔ 报告完整度（对标参考基准）
 
-> ⛔ **首版必须是六大部分完整框架，绝不默认为精简结构（生产实证，用户发现后原话批评过两次）**：曾两次我默认用了一份更短的「22 小节精简体」，用户两次原话批评：第一次问「怎么没参考卷发棒的格式框架做」，第二次问「调用本 SKILL 第一版为什么和卷发棒参考报告差那么多」。**根因是执行偏差（LLM 简化倾向），不是 SKILL 缺框架——SKILL 本就规定六大部分全量小节，是生成时没照做。** ⛔⛔ **生成任何报告前，先逐节对照 `references/report-completeness-standard.md` 与卷发棒基准，默认输出完整版；绝不因"够用""太长"而自行降级小节。完整框架红线为：**六大部分 + 每一部分的全部小节（即使感觉冗余）都必须齐全**。市场概况含 CR3产品/品牌/卖家三指标、#1单品占比、线上vs线下拆解表（分成两列）、波特五力三列、头部品牌线上%/整体%两列、销量/销额两幅独立曲线；产品介绍含1688实测成本表；受众含画像/习惯/互补品/TOP问答表 + 每条原声附中译；需求含痛点/金字塔/场景关联/画像匹配；开发策略含认证表(监管机构列)/专利具体品牌/风险应对表/差异设计/蓝海表/FABE/SWOT/PEST/可行性评分。
+> ⛔ **首版必须是六大部分完整框架，绝不默认为精简结构（生产实证，用户发现后原话批评过两次）**：默认输出完整版、绝不因"够用""太长"而自行降级小节，是运行时最重要的一条规矩。完整框架红线为：**六大部分 + 每一部分的全部小节（即使感觉冗余）都必须齐全**。市场概况含 CR3产品/品牌/卖家三指标、#1单品占比、线上vs线下拆解表（分成两列）、波特五力三列、头部品牌线上%/整体%两列、销量/销额两幅独立曲线；产品介绍含1688实测成本表；受众含画像/习惯/互补品/TOP问答表 + 每条原声附中译；需求含痛点/金字塔/场景关联/画像匹配；开发策略含认证表(监管机构列)/专利具体品牌/风险应对表/差异设计/蓝海表/FABE/SWOT/PEST/可行性评分。
 
-> 用户已多报销出参考基准 **`https://curling-iron-research.pages.dev/#s4`**（卷发棒报告，参考锚点 #s4），**首版齐全度不够会被判「报告不全」**。生成任何调研报告前，先对照本 skill 的 `references/report-completeness-standard.md` 核对达标项（⭐=首版易漏，务必补齐）：
+> 若你有线上参考基准报告，可把它的 URL（如 `<YOUR_REFERENCE_REPORT>.pages.dev/#s4`，任意完整版调研报告都可）作为「完整度示范」对照；**首版齐全度不够会被判「报告不全」**。生成任何调研报告前，先对照本 skill 的 `references/report-completeness-standard.md` 核对达标项（⭐=首版易漏，务必补齐）：
 - 市场概况：CR3**产品/品牌/卖家三指标**、#1单品占比、高评分/高评论占比、线上vs线下拆分表、**新品销量占比**、月销额**换算人民币**
 - 产品介绍：卖点**分类表**、款式/功能/线上价/**1688实测出厂成本**表
 - 受众分析：详细画像表、购物习惯表、互补产品、**受众常见问题表**。
 - 开发策略：认证表含监管机构列、专利风险**具体品牌**、**风险点与应对表**。
-- **⚡ ①销量/销额曲线「分开显示」为两幅独立柱状图**（用户硬性要求）：市场趋势「④近12个月销量/销售额曲线」必须拆成**两张分开的图**——上图「月销量曲线(件)」下图「月销额曲线(CAD/美元, 销量×均价估算, tag-est)」，各自独立 `bar-item` 序列，**严禁混成一幅**。柱条格式对齐卷发棒：`blabel(月份)` + `btrack(bfill width%)` 值 `"27,782件"` + `bval "28K"`（销量图）；销额图 `$xx万` + `$x.xM`。卷发棒报告生产实证。
-- **⚡ ②消费者原声「每条都附中文翻译」**（用户硬性要求）：P3「消费者原声（好评+差评）」的**每一条**评论原声都必须紧跟 `class="cn"` 中文翻译，格式对齐卷发棒：`<div class="review"><div class="stars">★…</div><div class="en">"英文/法语原文"</div><div class="cn">—— 中文翻译（产品标注）</div></div>`；好评绿标 `var(--green)`「■典型好评」、差评红标 `var(--red)`「■典型差评」分列两栏（grid-2）。**任何评论只有原文无中译，都会被用户判定为缺失**。法语差评（魁北克）保留原文 + 中文翻译 + 法语 tag。
+- **⚡ ①销量/销额曲线「分开显示」为两幅独立柱状图**（用户硬性要求）：市场趋势「④近12个月销量/销售额曲线」必须拆成**两张分开的图**——上图「月销量曲线(件)」下图「月销额曲线(CAD/美元, 销量×均价估算, tag-est)」，各自独立 `bar-item` 序列，**严禁混成一幅**。柱条格式：`blabel(月份)` + `btrack(bfill width%)` 值 `"27,782件"` + `bval "28K"`（销量图）；销额图 `$xx万` + `$x.xM`。
+- **⚡ ②消费者原声「每条都附中文翻译」**（用户硬性要求）：P3「消费者原声（好评+差评）」的**每一条**评论原声都必须紧跟 `class="cn"` 中文翻译，格式：`<div class="review"><div class="stars">★…</div><div class="en">"英文/法语原文"</div><div class="cn">—— 中文翻译（产品标注）</div></div>`；好评绿标 `var(--green)`「■典型好评」、差评红标 `var(--red)`「■典型差评」分列两栏（grid-2）。**任何评论只有原文无中译，都会被用户判定为缺失**。法语差评保留原文 + 中文翻译 + 法语 tag。
 - 每章开头 src-bar 标来源；重要洞察用 callout/insight-box 强调非平铺
+
+> 📏 生成后如需核对线上参考报告的结构（`bar-item`/c​n 中译/锚点 s0-s5 等），可用 `curl` 拉取你的参考报告 HTML 后逐项对比 tag 配对与类名。
 
 关键提取技术（一次 `category_report` 即得 CR3三share + Amazon自营 + 高评分/高评论share；新品占比=解析 online_date≤90天；出厂成本用 ali1688_similar_product 真实价格）——详见该 reference 文件。
 
-## 数据采集工作流（Sorftime MCP Direct Client）
+## 数据采集工作流（Sorftime MCP）
 
-> ⛔ **本机关键**：Sorftime MCP 服务器有时不可达（MCP 工具会超时），**优先使用 Direct Client**：
-> `python3 /opt/data/mcp_client.py <tool_name> '<json_args>'`（snake_case 参数，SSE 解析）。
+> ⚙️ **数据源接入说明**：本 SKILL 依赖 Sorftime 电商数据。请通过你已配置好的 Sorftime MCP 工具（`mcp.sorftime.com`，SSE）调用以下工具；如你的 MCP 服务偶发不可达，可用一个轻量 Direct Client 脚本（SSE 调用 `tools/call`）替代，把下面示例命令里的 `<YOUR_DIRECT_CLIENT>` 换成你本地脚本路径即可：
+> `<YOUR_DIRECT_CLIENT> <tool_name> '<json_args>'`（snake_case 参数，SSE 解析）。
 > 工具名用 camelCase 的短名：`product_detail` / `product_reviews` / `category_report` / `category_search_from_product_name` / `product_traffic_terms` / `keyword_detail` 等（可用 `tools/list` 查询全部）。
 > 参数名为 snake_case（如 `amz_site` 不是 `amzSite`，`review_type` 不是 `reviewType`）。
 
@@ -118,7 +120,7 @@ risk-level: low
 > ⛔ **`product_detail` 的 `attributes` 字段是 JSON 字符串，不是 dict（生产实证，直接 `.get()` 会崩）**：`ad.get('attributes')` 返回的是 `str`（形如 `"{\"Material\":\"Ceramic\",\"Power source\":\"Corded Electric\",...}"`），对它 `.get()` 报 `AttributeError: 'str' object has no attribute 'get'`。用前必须兜底解析：`a = ad.get('attributes'); a = json.loads(a) if isinstance(a,str) else (a or {})`，再 `a.get('Material','-')`。顺带可复用的健壮字段：经 `product_detail` 已直接给出 `fba_fee` / `gross_profit` / `gross_profit_rate` / `monthly_sales_amount` / `days_on_shelf` — 写成本测算与单品卡时优先用这些而非自己算。
 
 ### 类目定位 + 市场数据
-> ⛔ **类目定位坑（首次执行实证）**：`category_search_from_product_name` 常把产品归到**宽泛父类目**（如 straightener brush → Hair Brushes 均价$11，错误）。**先核对返回均价/价格带是否吻合**（直发梳主流 $30-70，均价绝不可能 $11）；不吻合时用 `category_name_search` 换更精确的细分类目名（如 "Hot-Air Hair Brushes" → Node 11058221）。详见 `references/us-straightener-brush-first-run.md`。
+> ⛔ **类目定位坑（同类目实证）**：`category_search_from_product_name` 常把产品归到**宽泛父类目**（如美发工具类下把品类归到均价过低的父类，与主流价格带严重不符，如标称 $30-70 的商品归到均价 $11 的父类）。**先核对返回均价/价格带是否吻合**；不吻合时用 `category_name_search` 换更精确的细分类目名。
 
 | 数据 | 工具（短名） | 参数 |
 |------|------------|------|
@@ -156,7 +158,7 @@ risk-level: low
 
 ## 样式系统
 
-⛔ 完整 CSS 组件库见 amazon-category-report skill 的 `references/style_component_library.md`（蓝灰商务风，纯CSS无ECharts）：
+⛔ 完整 CSS 组件库（蓝灰商务风，纯CSS无ECharts）见 `references/pure-css-trend-curves.md` 与本 SKILL 的生成器模板 `templates/generator_template.py`（内含 `CSS` 常量 + `kpi/bar/sec/note` 组件函数，可直接复用）：
 - `kpi-grid/kpi-card`、`bar-item/bar-track/bar-fill`、`insight-box`、`verdict-box`、`table-wrap`、`detail-card`、`grid-2`、`tag-*`
 - 默认主题：蓝灰商务风（--blue #2563eb，灰阶）
 
@@ -184,45 +186,38 @@ risk-level: low
 
 ## 部署
 
-首选用 **amazon-category-report** skill 自带的 `scripts/deploy_report.py`（Cloudflare Pages 全自动）：
-```bash
-bash -c 'source /opt/data/cf_env.sh && python3 /opt/data/skills/software-development/amazon-category-report/scripts/deploy_report.py /path/to/index.html --site US --owner Della'
-```
-- 布局须放在一个独立目录下（脚本用目录名生成项目名）
-- 证信用 env var（cf_env.sh 已配置 CF_API_TOKEN_B64 或 CLOUDFLARE_API_TOKEN）
-- 若需生成的 URL，从脚本输出读取
+报告生成后可选发布到线上（Cloudflare Pages / 任意静态托管）。以下给出两种方式，均为**通用命令**，请把 `<YOUR_DEPLOY_CONFIG>` 等替换为你自己的路径/凭证：
 
-⛔ **`wrangler pages deploy` 单文件坑**：直接 `npx wrangler pages deploy report.html` 会报 `ENOTDIR`（wrangler 要求传**目录**）。手动直发时必须先把 HTML 复制为目录里的 `index.html`：
+**方式一：`wrangler` CLI（推荐，最可靠）**
 ```bash
-rm -rf /tmp/styler_deploy && mkdir -p /tmp/styler_deploy \
-  && cp report.html /tmp/styler_deploy/index.html \
-  && bash -c 'source /opt/data/cf_env.sh && npx --yes wrangler pages deploy /tmp/styler_deploy --project-name <project>'
+# 先建项目（仅首次；把 <name> 换成你的项目名）
+npx --yes wrangler@latest pages project create <name> --production-branch main
+# 把报告复制为部署目录的 index.html，再部署目录
+rm -rf /tmp/<name>_deploy && mkdir -p /tmp/<name>_deploy \
+  && cp report.html /tmp/<name>_deploy/index.html \
+  && npx --yes wrangler pages deploy /tmp/<name>_deploy --project-name <name>
 ```
-成功输出含 `https://<hash>.<project>.pages.dev`（沙箱内无法直接访问 *.pages.dev，用 Cloudflare API/返回 URL 确认）。
-
-⛔ **Pages 项目不存在时须先 create**：对**新项目名**手动直发（不用 deploy_report.py）会报 `The Pages project "<name>" does not exist`。先建项目再部署：
-```bash
-bash -c 'source /opt/data/cf_env.sh && npx --yes wrangler@latest pages project create <name> --production-branch main'
-# 然后同上 wrangler pages deploy 目录
-```
-生产 URL 固定为 `https://<name>.pages.dev`（创建后首个部署生效）；临时 hash URL 刚部署时 SSL 可能握手失败（curl HTTP 000），等缓存传播或直接用生产域名验证。
+- 记住 `wrangler pages deploy` 要传**目录**不是单文件（单文件报 `ENOTDIR`）
+- 正式环境需登录/配置 `CLOUDFLARE_API_TOKEN`（env var），示例：`bash -c 'source <YOUR_CF_ENV_FILE> && npx --yes wrangler pages deploy ...'`，把 `<YOUR_CF_ENV_FILE>` 换成你本地存 token 的文件。
+- 成功输出含 `https://<hash>.<name>.pages.dev`；若本机无法访问 *.pages.dev（沙箱常见），用生产域名 `https://<name>.pages.dev` 或 Cloudflare API 确认部署状态。
+- Pages 项目不存在时先 create（报 `The Pages project "<name>" does not exist` 就是没建）。
 
 > ⛔ **REST API 手动 direct-upload 必须带 `manifest` 字段（生产实证，漏了报错 8000096）**：不用 wrangler、直接 `POST /accounts/{acct}/pages/projects/{name}/deployments` 时，multipart 里必须含一个 `manifest` 字段，值为 `{"文件路径": "<sha256>"}` 的 JSON（哈希用 `sha256sum index.html` 取），且同名文件作为另一个表单字段一并提交。缺 `manifest` 报 `code 8000096 "A manifest field was expected in the request body"`。完整 multipart 顺序：`metadata`（`{"deployment_type":"direct"}`）→ `manifest`（hash 映射）→ 文件本体。若只想确认部署状态，`GET /accounts/{acct}/pages/projects/{name}/deployments` 查 `latest_deployment.url` 即可。
 
-> ⛔ **manifest 文件 key 必须带前导 `/`（生产实证，漏了就根域名 404）**：manifest 的键必须是**以 `/` 开头的路径**（`{"/index.html": "<sha256>"}`），且 multipart 文件表单字段名也用 `/index.html`（`-F "/index.html=@index.html"`）。若写成 `{"index.html": sha}`（漏斜杠），Cloudflare 把文件 key 存成 `"index.html"`，根路由 `/` 匹配不到 → 浏览器访问 `https://<name>.pages.dev/` 得 **HTTP 404**（部署 API 仍 `success:True`、url 照给，极具迷惑性）。诊断：`GET .../deployments/{id}` 看 `result.files` 的 key 是否带 `/` 前缀。**部署健康唯一可靠验证 = Cloudflare API 的 `latest_deployment.latest_stage.status == success` + files key 带 `/`**；对外 curl/浏览器访问 pages.dev 出现 HTTP 500 / SSL 握手失败 / HTTP 000 往往是本机到边缘网络不稳，不能当部署失败判断，交浏览器验证。完整直发+验证方案见 `references/cloudflare-pages-direct-upload.md`。
+> ⛔ **manifest 文件 key 必须带前导 `/`（生产实证，漏了就根域名 404）**：manifest 的键必须是**以 `/` 开头的路径**（`{"/index.html": "<sha256>"}`），且 multipart 文件表单字段名也用 `/index.html`（`-F "/index.html=@index.html"`）。若写成 `{"index.html": sha}`（漏斜杠），Cloudflare 把文件 key 存成 `"index.html"`，根路由 `/` 匹配不到 → 浏览器访问 `https://<name>.pages.dev/` 得 **HTTP 404**（部署 API 仍 `success:True`、url 照给，极具迷惑性）。诊断：`GET .../deployments/{id}` 看 `result.files` 的 key 是否带 `/` 前缀。**部署健康唯一可靠验证 = Cloudflare API 的 `latest_deployment.latest_stage.status == success` + files key 带 `/`**；对外 curl/浏览器访问 pages.dev 出现 HTTP 500 / SSL 握手失败 / HTTP 000 往往是本机到边缘网络不稳，不能当部署失败判断，交浏览器验证。
 
 > ⛔ **证信用 env var 别写**字面**占位（生产实证踩坑）**：手动 curl 时把认证头写成字面 `"Authorization: Bearer ***"`（或手敲 `***`）会返回 `code 9106 "Missing X-Auth-Key, X-Auth-Email or Authorization headers"` / `Authentication failed`——必须引用真实 env var（`"Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"`）。注意：沙箱回显会把 `${CLOUDFLARE_API_TOKEN}` 显示成 `$CLOUD...EN`、把真实 token 显示成 `***`，这是**显示层遮罩**，磁盘/实际执行的脚本内容是正确的——不要因此误以为脚本写错而改成字面 `***`（改了就真 401）。判断标准看 token 到底有没有生效：部署 API 返回 `success:True` 即正确。
 >
-> ⛔ **但 write_file/patch 偶发把 token 变量名「写坏」在磁盘（生产实证，与上面显示遮罩不同）**：某些脚本 `read_file` 后发现磁盘上变量引用被截断成 `$CLOUD...KEN` 之类残缺名，导致同一逻辑这次 curl 报 9106、上次却正常。**别再和遮罩搏斗**——改用最可靠路径：在 **execute_code/Python 里直接从 `cf_env.sh` 解析 token**（每行剥掉 `export ` 前缀 + `split('=',1)` + strip 引号），用 urllib/requests 以 dict-header 发请求，完全不经过 shell 变量插值。完整可靠代码 + 404 排查顺序见 `references/cloudflare-pages-direct-upload.md` 第 3 节。
+> ⛔ **但 write_file/patch 偶发把 token 变量名「写坏」在磁盘（生产实证，与上面显示遮罩不同）**：某些脚本 `read_file` 后发现磁盘上变量引用被截断成 `$CLOUD...KEN` 之类残缺名，导致同一逻辑这次 curl 报 9106、上次却正常。**别再和遮罩搏斗**——改用最可靠路径：在 Python 里直接从你的凭证文件（如 `cf_env.sh`，每行 `export KEY=value`）解析 token：`dict(l.strip().replace('export ','',1).split('=',1) for l in open('<YOUR_CF_ENV_FILE>'))`，用 urllib/requests 以 dict-header 发请求，完全不经过 shell 变量插值。
 
 ## 变更 Top100 取值类目（报告改造流程）
 
-> 用户要求「换个类目」时（如 11058221 Hot-Air Brushes → 11058261 Straighteners），不是只改一个字段——**所有数据依赖段都要重取重写**，否则报告会出现旧类目数字与新类目标题混搭。
+> 用户要求「换个类目」时（如 `<旧类目NODE> <旧类目名>` → `<新类目NODE> <新类目名>`），不是只改一个字段——**所有数据依赖段都要重取重写**，否则报告会出现旧类目数字与新类目标题混搭。
 
 1. **重取数据**：对 newNode 重跑 `category_report`（Top100/stats）、`category_trend`（SalesCount/AvgPrice/新品占比）、`category_keywords`。重新挑该类目下的**直发梳/品类代表 ASIN** 拉 `product_reviews` 换掉好评差评样本。
 2. **逐段重写数据依赖段**：市场容量（Top100/CR3/CR5/Amazon自营/均价）、市场趋势（生命周期阶段/**旺季淡季**/增速）、市场竞争（占比数字）、TOP品牌表（#1品牌与份额名次全变）、产品功能/成本、好评差评频次（样本数+话题占比）、以及四/五大部分里引用的差评#1/#2痛点、SWOT判断。
 3. **全局检索残留旧类目**：生成后 grep HTML 的旧 `NodeID`、旧 #1 品牌名、旧样本数（如 `153 条`→`187 条`、`84 条`→`73 条`），逐个清理。注意「相对旧类目的对比句」（如"护城河弱于热风直发梳"）可保留作为上下文，但要确认非纯旧数据。
-4. **口径说明**：报告中用 `<div class=note>` 注明"XX产品在亚马逊无独立节点，按要求归入 <newNode> Top100 取值；该类目包含 XX 细分产品"。换类目前先跟用户确认口径（见 `references/us-straightener-brush-first-run.md`）。
+4. **口径说明**：报告中用 `<div class=note>` 注明"XX产品在亚马逊无独立节点，按要求归入 <newNode> Top100 取值；该类目包含 XX 细分产品"。换类目前先跟用户确认口径。
 
 ## 交付自检清单
 
@@ -232,13 +227,13 @@ bash -c 'source /opt/data/cf_env.sh && npx --yes wrangler@latest pages project c
 - [ ] 每个市场数据有来源标注（Sorftime / 公信息 / 估算）
 - [ ] 默认蓝灰商务风，纯 CSS 无 ECharts
 - [ ] 若报告含目录导航，确认每节 `<div class="section-title">` 有唯一 `id` 且目录 `href` 与之对应（锚点注入别用朴素 replace 覆盖，见 `references/report-generation-architecture.md`）
-- [ ] 页脚「分析负责人：Della」（可自定义/留空）
+- [ ] 页脚「分析负责人：<署名>」（请使用者自定义；默认可留空或填自己的名字）
 - [ ] 数据来自真实输出（无编造）；好评/差评 TOP20 为真实频次或明确降级说明
 - [ ] **曲线分开**：销量/销额是**两幅独立**柱状图非混排；**消费者原声每条都带 `class="cn"` 中译**（review 结构含 stars/en/cn 三段）
 - [ ] **⚡ 生成后必跑标签配对 audit**（不止 5 章节齐全检查）：`<section>/<div>/<table>/<tr>/<td>/<th>/<ul>/<ol>/<li>/<b>/<span>` 各 `open==close`。否则一个丢 `</li>` 的小 bug（常因字符串字面量里误加尾随 `;` 导致，如 `'...。');` 少了 `</li>`）会静默破坏整节排版
 - [ ] **⛔ 校验完整 CSS 在 `<style>` 内**（否则页面显示"源码标签"，见下方坑）：用 `re.findall(r'<style>(.*?)</style>', h, re.S)` 统计所有 `<style>` 块总长，**完整报告应数千字节**（纯样式几千 B）；若只有几百字节（如 700B）说明 CSS 拼错位置掉到 `<body>` 当裸文本了。同时确认 `</style>` 位置在 `<body>` 之前。
 
-### ⛔ 坑：CSS 拼到 `</style>` 之后 → 页面显示"源码标签"（卷发棒报告生产实证）
+### ⛔ 坑：CSS 拼到 `</style>` 之后 → 页面显示"源码标签"（生产实证）
 **症状**：浏览器/本地双击打开报告，显示一堆 `<div>` `<section>` 裸标签、完全无排版，像"源代码"；**不是乱码、不是编码、不是服务器**（服务器 `Content-Type: text/html; charset=utf-8` 正常）。
 **根因**：多段字符串拼接 HTML 时，若 `CSS` 变量被拼进了字符串里**已存在的第一个 `</style>` 之后**（而非 `</style>` 之前），完整 CSS 就会掉进 `<body>` 当纯文本丢弃，只剩 `<head>` 里一小段（如目录样式）。从而正文所有 `class` 无样式 → 无排版 → 显示源码。
 **修复**：把完整 `CSS` 插入 `<head>` 内 `<style>` 标签的**开头**——`html_head = '''...<style>\n''' + CSS + '''...toc...\n</style></head><body>'''`。生成后按上面自检项验证 `<style>` 内总长。
@@ -250,18 +245,22 @@ bash -c 'source /opt/data/cf_env.sh && npx --yes wrangler@latest pages project c
 
 ## 🚀 公开分享 / GitHub 发布前脱敏清单
 
-> 用户要发布 skill / 脚本到**公开 GitHub** 时，逐项自查——比"凭据扫描"更广，后者查不到内部路径泄露：
+> 要发布 skill / 脚本到**公开 GitHub** 时，逐项自查——比"凭据扫描"更广，后者查不到内部路径泄露：
 
-1. **删除/改写内部绝对路径引用**：SKILL 正文里的 `python3 /opt/data/mcp_client.py ...`、`source /opt/data/cf_env.sh`、`--project-name <hash>.styler`、`/tmp/styler_deploy` 等全是**本机专属**，public 后别人照做即失败，还引导暴露内部文件。
-2. **剥离未随包发布的内部依赖**：`mcp_client.py`（内含 Sorftime API key）不发布，SKILL 却引用它 → 改写为通用命令占位。
-3. **确认排除 session 专属参考报告**：如 `references/us-straightener-brush-first-run.md`（直发梳首次执行实证）用户明确不发布 → 从 SKILL 引用处一并删，别只删文件留着悬空链接。
-4. **生成器脚本常是"品类专用"非通用模板**：`market_research_straightenerus.py` 的 docstring（"直发梳×美国"）、`VOL_CHART/AMT_CHART` 数据常量、正文数字全是该品类硬编码——原样 public 等于泄品类报告。要发通用性，需先参数化/去品类化，或只发 SKILL + 通用组件、脚本留本地。
+1. **改写内部绝对路径引用**：正文里形如 `python3 <LOCAL_PATH>/mcp_client.py ...`、`source <LOCAL_PATH>/cf_env.sh`、`/tmp/<your_deploy_dir>` 等全是**本机专属**，public 后别人照做即失败，还引导暴露内部文件——统一改为 `<YOUR_...>` 占位。
+2. **剥离未随包发布的内部依赖**：如一个内含 API key 的 Direct Client 脚本不发布，SKILL 却引用它 → 改写为通用命令占位（「请接入你自己的 Sorftime MCP / Direct Client」）。
+3. **确认排除 session 专属参考报告**：泛化失败的首次执行实证、内部抓取检查脚本等**用户私有产物**不应随包发布 → 从引用处一并删，别只删文件留着悬空链接。
+4. **生成器脚本常是"品类专用"非通用模板**：docstring（如"某品类×某国"）、固定的数据常量、正文数字全是该品类硬编码——原样 public 等于泄品类报告。要发通用性，需先参数化/去品类化（产品名/国家/类目/NODE 做成变量），或只发 SKILL + 通用组件、脚本留本地。
 5. **发布前先问用户三件事**：(a) 明确要发哪个文件集；(b) 哪个 session 专属报告要排除；(c) GitHub 认证权限——受限 PAT（如仅授一个 repo 的 fine-grained token）**不能新建/推其他 repo（403）**，需用户提供可建仓库的 token 或手动建好仓库名。发布是公开不可逆操作，先确认再动手。
-6. **待发布物 vs 本地必须排除**：`state.db/logs/memories/.npm/.wrangler`/旧品类报告/`mcp_client.py`/`cf_env.sh` 一律不入库，用 gitignore 或只在独立发布目录组装。
-7. **无 `gh`/git 时用 GitHub Contents API 直推**：若沙箱没装 `gh`、也不想在发布目录 git init，可用 REST API 逐个上传文件（见 `references/github-publish-contents-api.md`）。**先探测 PAT 权限**再动手：
+6. **待发布物 vs 本地必须排除**：`state.db/logs/memories/.npm/.wrangler`/本地脚本/含 key 的凭证文件 一律不入库，用 gitignore 或只在独立发布目录组装。
+7. **无 `gh`/git 时用 GitHub Contents API 直推**：若环境没装 `gh`、也不想在发布目录 git init，可用 REST API 逐个上传文件（见 `references/github-publish-contents-api.md`）。**先探测 PAT 权限**再动手：
    - `GET /user` 确认账号对得上；`GET /repos/{owner}/{repo}` 返回 200 = 有访问权，403/404 = 受限 PAT 无该 repo 权限（用户需把新 repo 加进 fine-grained token 的 Repository access，或手动建好仓库）。
    - **写权限探测**：`PUT /repos/{owner}/{repo}/contents/_perm_test.txt` 传临时内容，返回 201 = 有写权限，随后 DELETE 清理。**这一步必须做**——受限 PAT 可能只授 read（能 GET 仓库、不能 PUT 文件），直接推会中途失败。
    - 发布是公开不可逆操作：先把文件脱敏/排除清单跑完，再 push。
+
+> ⛔ **脱敏是对 SKILL 自身做一次（把自己当待发布物）**：发布前把上面清单逐项套用到 SKILL 本体 + references。生产实证两个易漏项：
+> - **内部 callout 纠错史也是指纹**：SKILL 里为「记住教训」写的批评史片段（"用户原话批评过两次"）、隐藏的内部参考报告 URL（如 `xxx.pages.dev`）、历史默认署名、以及具体品类名作例子——这些虽非真实凭据，但一发布就暴露你的私有部署/历史/习惯，**外人看到也一头雾水**。一律泛化为 `占位符`（`<YOUR_REFERENCE_REPORT>` / `<署名>` / `<产品名>×<国家>` / `OWNER/REPO`）。判断标准：这条信息是否**只对你本机有意义**？是→占位或删。
+> - **别和破坏性命令保护硬碰：选择性组装发布目录**。待排除文件（首次执行实证、内部检查脚本、含 key 脚本）位于 skills 托管目录时，`rm` 可能被权限护栏拦下（超时未同意=未授权，不要重试/换命令硬删）。**正确做法**：新建独立发布目录，用 `cp` **只复制白名单文件**进去（SKILL.md + 泛化后的 references + 通用脚本），待排除文件留在原位即可——发布物 = 发布目录内容，与本地仓库解耦，天然不泄。这也符合清单第 6 条「只在独立发布目录组装」。
 
 ### ⚠️ patch 被拒：escape-drift 误报
 对含引号/反斜杠的文件（markdown 里的 `"..."` 或代码里的转义序列）做 `patch` 时，若 new_string 里写了 `\"` 字面转义（如 `\"Hot-Air\"`），会触发 **"Escape-drift detected"** 拒绝，提示 old/new 含字面 `\"` 但文件里没有。修复：**先用 read_file 读原文，old_string/new_string 按原样传普通 `"`，不要加反斜杠**。
